@@ -9,22 +9,39 @@ nr_letters= int(input("How many letters would you like in your password?\n"))
 nr_symbols = int(input(f"How many symbols would you like?\n"))
 nr_numbers = int(input(f"How many numbers would you like?\n"))
 
-total_letter = ("")
+# Easy example
+
+password = ("")
 for id in range(0, nr_letters):
-    total_letter = str(total_letter) + str(random.choice(letters))
+    password = password + random.choice(letters)
 
-total_number = ("")
 for id in range(0, nr_numbers):
-    total_number = str(total_number) + str(random.choice(numbers))
+    password = password + random.choice(numbers)
     
-total_symbols = ("")
 for id in range(0, nr_symbols):
-    total_symbols = str(total_symbols) + str(random.choice(symbols))
+    password = password + random.choice(symbols)
     
-
-password = str(total_letter + total_number + total_symbols)
 print(password)
 
+# Hard example
+
+password_list = []
+
+for id in range(1, nr_letters + 1):
+    password_list.append(random.choice(letters))
+
+for id in range(1, nr_numbers + 1):
+    password_list.append(random.choice(numbers))
+    
+for id in range(1, nr_symbols + 1):
+    password_list.append(random.choice(symbols))
+
+random.shuffle(password_list)
+
+password2 = ("")
+for char in password_list:
+    password2 = password2 + char
+print(password2)
 
 
 #Eazy Level - Order not randomised:
