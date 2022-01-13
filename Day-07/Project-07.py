@@ -3,13 +3,22 @@
 import random
 import hangman_art
 import hangman_words
+from os import system, name
 
 print(hangman_art.logo)
 chosen_word = random.choice(hangman_words.word_list)
 word_length = len(chosen_word)
 
-#TODO-1: - Create a variable called 'lives' to keep track of the number of lives left. 
-#Set 'lives' to equal 6.
+
+def clear():
+      
+    # for windows
+    if name == 'nt':
+        _ = system('cls')
+  
+    # for mac and linux(here, os.name is 'posix')
+    else:
+        _ = system('clear')
 
 #Testing code
 print(f'Pssst, the solution is {chosen_word}.')
@@ -24,6 +33,8 @@ lives = 6
 
 while not end_of_game:
     guess = input("Guess a letter: ").lower()
+    
+    clear()
     if guess not in chosen_word:
         lives = lives - 1
         print(f" You guessed {guess}, that's not in the word. You lose a life")
