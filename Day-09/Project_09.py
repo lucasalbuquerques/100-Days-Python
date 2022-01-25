@@ -1,6 +1,7 @@
 import art
 import os
 
+
 def clear():
     os.system('cls' if os.name=='nt' else 'clear')
 
@@ -14,7 +15,7 @@ next = True
 while next == True:
     name = input("Whats your name? ")
     bid = int(input("What's your bid? "))
-    auction[f'{name}'] = bid
+    auction[name] = bid
 
     continues = input("Are there any other bidders? Type 'yes' or 'no'".lower())
     if continues == "no":
