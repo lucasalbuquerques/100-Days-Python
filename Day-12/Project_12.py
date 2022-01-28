@@ -1,5 +1,13 @@
 import random
 from art import logo
+def set_difficulty(level):
+    if level == "easy":
+        return 10
+    elif level == "hard":
+        return 5
+    else:
+        print("I didn't recognize your option, so it will be the 'easy' option ")
+        return 10
 
 awnser = random.randint(1,100)
 
@@ -7,13 +15,7 @@ print(logo)
 print("Welcome to the Number Guessing Game!")
 print("I'm thinking of a number between 1 and 100.")
 level = input("Chose a difficulty. Type 'easy' or 'hard': ").lower()
-if level == "easy":
-    attempt = 10
-elif level == "hard":
-    attempt = 5
-else:
-    print("I didn't recognize your option, so it will be the 'easy' option ")
-    attempt = 10
+attempt = set_difficulty(level)
 
 contador = 0
 
