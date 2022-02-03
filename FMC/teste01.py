@@ -29,7 +29,6 @@ def domain_uuid(hostname, token):
 
 def acp_id_by_name(hostname, token, acp_name):
     uuid = domain_uuid(hostname, token)
-    token = login(hostname, username, password)
     header_acp = {'X-auth-access-token': f'{token}'}
     response_acp = requests.get(f"https://{hostname}/api/fmc_config/v1/domain/{uuid}/policy/accesspolicies", headers=header_acp,verify=False)
     response = json.loads(response_acp.content)
@@ -39,9 +38,18 @@ def acp_id_by_name(hostname, token, acp_name):
             acp_id = items["id"]
     return acp_id
 
+def acp_rules(hostname, token):
+    uuid = domain_uuid(hostname, token)
+    acp_id = acp_id_by_name(hostname, token, acp_name)
+    header_acp = {'X-auth-access-token': f'{token}'}
+    response_acp = requests.get(f"https://{hostname}/api/fmc_config/v1/domain/{uuid}/policy/accesspolicies/{acp_id}/accessrules?expanded=true",headers=header_acp, verify=False)
+    response = json.loads(response_acp.content)
+    for items in response["items"]:
+        print(items)
+
 
 token = login(hostname, username, password)
-teste = acp_id_by_name(hostname, token, acp_name)
+teste = acp_rules(hostname, token)
 print(teste)
 
 
