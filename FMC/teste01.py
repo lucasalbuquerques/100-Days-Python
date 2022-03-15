@@ -6,15 +6,11 @@ import urllib3
 urllib3.disable_warnings()
 
 
-hostname = "fmcrestapisandbox.cisco.com"
-username = "lucas.albu"
-password = "XaVeRCqa"
-acp_name = "mb-test-01"
-
 def login(hostname, username, password):
     url = (f"https://{hostname}/api/fmc_platform/v1/auth/generatetoken")
     token = requests.post(url, data={}, auth=(f'{username}', f'{password}'), verify=False)
     return token.headers["X-auth-access-token"]
+
 
 def domain_uuid(hostname, token):
     header_domain = {'X-auth-access-token': f'{token}'}
@@ -38,19 +34,18 @@ def acp_id_by_name(hostname, token, acp_name):
             acp_id = items["id"]
     return acp_id
 
-def acp_rules(hostname, token):
+
+def acp_rules(hostname, token, acp_name):
     uuid = domain_uuid(hostname, token)
     acp_id = acp_id_by_name(hostname, token, acp_name)
     header_acp = {'X-auth-access-token': f'{token}'}
-    response_acp = requests.get(f"https://{hostname}/api/fmc_config/v1/domain/{uuid}/policy/accesspolicies/{acp_id}/accessrules?expanded=true",headers=header_acp, verify=False)
-    response = json.loads(response_acp.content)
-    for items in response["items"]:
-        print(items)
+    response = requests.get(f"https://{hostname}/api/fmc_config/v1/domain/{uuid}/policy/accesspolicies/{acp_id}/accessrules?expanded=true",headers=header_acp, verify=False).json()
+    return response["items"]
 
 
-token = login(hostname, username, password)
-teste = acp_rules(hostname, token)
-print(teste)
+
+
+
 
 
 
